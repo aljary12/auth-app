@@ -1,4 +1,5 @@
 import { palette } from "@/themes/pallete";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { ActivityIndicator } from "react-native";
 import Text from "./text";
@@ -6,14 +7,24 @@ import Touchable, { TouchableProps } from "./touchable";
 
 interface Props extends TouchableProps {
   title: string;
+  leftIcon?: React.ComponentProps<typeof Ionicons>;
+  rightIcon?: React.ComponentProps<typeof Ionicons>;
   isPassword?: boolean;
   mode?: "outline" | "fill";
   loading?: boolean;
 }
 
 export default function Button(props: Props) {
-  const { title, style, mode = "fill", loading, disabled, ...rest } = props;
-
+  const {
+    title,
+    style,
+    leftIcon,
+    rightIcon,
+    mode = "fill",
+    loading,
+    disabled,
+    ...rest
+  } = props;
   return (
     <Touchable
       row
@@ -36,14 +47,22 @@ export default function Button(props: Props) {
       {loading ? (
         <ActivityIndicator size={20} color={palette.greyscale900} />
       ) : (
-        <Text
-          size="large"
-          weight="bold"
-          style={{ color: palette.greyscale900 }}
-          center
-        >
-          {title}
-        </Text>
+        <>
+          {leftIcon && (
+            <Ionicons size={20} color={palette.greyscale900} {...leftIcon} />
+          )}
+          <Text
+            size="large"
+            weight="bold"
+            style={{ color: palette.greyscale900 }}
+            center
+          >
+            {title}
+          </Text>
+          {rightIcon && (
+            <Ionicons size={20} color={palette.greyscale900} {...rightIcon} />
+          )}
+        </>
       )}
     </Touchable>
   );

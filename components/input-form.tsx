@@ -1,4 +1,5 @@
 import { palette } from "@/themes/pallete";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import {
   StyleProp,
@@ -9,16 +10,19 @@ import {
   ViewStyle,
 } from "react-native";
 import Text from "./text";
+import Touchable from "./touchable";
 
 interface Props extends TextInputProps {
   title?: string;
   formStyle?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
+  leftIcon?: React.ComponentProps<typeof Ionicons>;
   isPassword?: boolean;
 }
 
 export default function InputForm(props: Props) {
-  const { title, formStyle, inputStyle, isPassword, style, ...rest } = props;
+  const { leftIcon, title, formStyle, inputStyle, isPassword, style, ...rest } =
+    props;
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -42,6 +46,9 @@ export default function InputForm(props: Props) {
           inputStyle,
         ]}
       >
+        {leftIcon && (
+          <Ionicons color={palette.greyscale900} size={20} {...leftIcon} />
+        )}
         <TextInput
           style={[
             weights.regular,
@@ -61,6 +68,16 @@ export default function InputForm(props: Props) {
           placeholderTextColor={palette.greyscale500}
           {...rest}
         />
+        {isPassword && (
+          <Touchable onPress={() => setIsPasswordVisible((prev) => !prev)}>
+            <Ionicons
+              type="regular"
+              size={20}
+              name={isPasswordVisible ? "eye-off-outline" : "eye-outline"}
+              color={palette.greyscale900}
+            />
+          </Touchable>
+        )}
       </View>
     </View>
   );
