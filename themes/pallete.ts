@@ -1,0 +1,103 @@
+export const palette = {
+  // primary
+  primary900: "#FEBB1B",
+  primary800: "#FEC232",
+  primary700: "#FEC949",
+  primary600: "#FECF5F",
+  primary500: "#FED676",
+  primary400: "#FFDD8D",
+  primary300: "#FFE4A4",
+  primary200: "#FFEBBB",
+  primary100: "#FFF1D1",
+  primary50: "#FFF8E8",
+
+  // secondary
+  secondary900: "#8BC34A",
+  secondary800: "#97C95C",
+  secondary700: "#A2CF6E",
+  secondary600: "#AED580",
+  secondary500: "#B9DB92",
+  secondary400: "#C5E1A5",
+  secondary300: "#D1E7B7",
+  secondary200: "#DCEDC9",
+  secondary100: "#E8F3DB",
+  secondary50: "#F3F9ED",
+
+  // alerts & status
+  alertsStatusSuccess: "#12D18E",
+  alertsStatusInfo: "#FEBB1B",
+  alertsStatusWarning: "#FACC15",
+  alertsStatusError: "#F75555",
+  alertsStatusLightDisabled: "#D8D8D8",
+  alertsStatusDarkDisabled: "#23252B",
+  alertsStatusButtonDisabled: "#CB9616",
+
+  // greyscale
+  greyscale900: "#212121",
+  greyscale800: "#424242",
+  greyscale700: "#616161",
+  greyscale600: "#757575",
+  greyscale500: "#9E9E9E",
+  greyscale400: "#BDBDBD",
+  greyscale300: "#E0E0E0",
+  greyscale200: "#EEEEEE",
+  greyscale100: "#F5F5F5",
+  greyscale50: "#FAFAFA",
+
+  // gradients
+  gradientsTeal: "#1A998E",
+
+  // others
+  othersWhite: "#FFFFFF",
+  othersBlack: "#000000",
+  othersRed: "#F54336",
+  othersPink: "#EA1E61",
+  othersPurple: "#9D28AC",
+  othersDeepPurple: "#673AB3",
+  othersIndigo: "#3F51B2",
+  othersBlue: "#1A96F0",
+  othersLightBlue: "#00A9F1",
+  othersCyan: "#00BCD3",
+  othersTeal: "#009689",
+  othersGreen: "#4AAF57",
+  othersLightGreen: "#8BC255",
+  othersLime: "#CDDC4C",
+  othersYellow: "#FFEB4F",
+  othersAmber: "#FFC02D",
+  othersOrange: "#FF981F",
+  othersDeepOrange: "#FF5726",
+  othersBrown: "#7A5548",
+  othersBlueGrey: "#607D8A",
+  othersBrightOrange: "#FEBB1B",
+
+  // dark
+  dark1: "#181A20",
+  dark2: "#1E2025",
+  dark3: "#1F222A",
+  dark4: "#262A35",
+  dark5: "#35383F",
+
+  // background
+  backgroundTeal: "#F0FBFA",
+  backgroundPurple: "#F8F0FE",
+  backgroundRed: "#FFF3F3",
+  backgroundBlue: "#F3F6FF",
+  backgroundGreen: "#EDFBF7",
+  backgroundBrown: "#FBF6F3",
+  backgroundYellow: "#FFFCEB",
+  backgroundOrange: "#FFF8EE",
+  backgroundGrey: "#F6F6F6",
+  backgroundBrightOrange: "#FFFAED",
+
+  // transparent
+  transparentTeal: "#1A998E",
+  transparentPurple: "#9610FF",
+  transparentRed: "#FF4A4A",
+  transparentBlue: "#235DFF",
+  transparentGreen: "#17CE92",
+  transparentBrown: "#A4634D",
+  transparentYellow: "#FFD300",
+  transparentOrange: "#F89300",
+  transparentGrey: "#757575",
+  transparentBrightOrange: "#FEBB1B",
+};
