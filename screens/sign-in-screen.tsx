@@ -113,15 +113,6 @@ export default function SignInScreen() {
               error={passwordState.error?.message}
             />
           </View>
-          <View style={{ flexDirection: "row", gap: 24 }}>
-            <Text
-              size="h6"
-              weight="bold"
-              style={{ flex: 1, textAlign: "right" }}
-            >
-              Forgot password?
-            </Text>
-          </View>
           <View
             style={{
               height: 1,
