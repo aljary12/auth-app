@@ -4,6 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 
+import { AuthProvider } from "./context/auth.context";
 import { fonts } from "./themes/fonts";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -22,7 +23,11 @@ function App() {
     return null;
   }
 
-  return <Routes />;
+  return (
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
+  );
 }
 
 export default App;

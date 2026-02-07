@@ -3,6 +3,7 @@ import InputForm from "@/components/input-form";
 import NavBar from "@/components/nav-bar";
 import Text from "@/components/text";
 import Touchable from "@/components/touchable";
+import { useAuth } from "@/context/auth.context";
 import { AuthParamList } from "@/routes/auth-navigator";
 import { palette } from "@/themes/pallete";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 type Navigation = NativeStackNavigationProp<AuthParamList>;
 
 export default function SignInScreen() {
+  const { login } = useAuth();
   const navigation = useNavigation<Navigation>();
 
   const [email, setEmail] = useState("");
@@ -25,6 +27,9 @@ export default function SignInScreen() {
     setLoading(true);
 
     try {
+      await login(email, password);
+    } catch (e: any) {
+      console.log("🚀 ~ signInWithEmail ~ e:", e?.message);
     } finally {
       setLoading(false);
     }

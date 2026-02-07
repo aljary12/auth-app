@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/auth.context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
@@ -12,12 +13,12 @@ export type RootParamList = {
 const Stack = createNativeStackNavigator<RootParamList>();
 
 export default function App() {
-  const session = false;
+  const { user } = useAuth();
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!session ? (
+        {!user ? (
           <Stack.Screen name="auth-navigator" component={AuthNavigator} />
         ) : (
           <Stack.Screen name="main-navigator" component={MainNavigator} />
