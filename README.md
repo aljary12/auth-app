@@ -1,50 +1,72 @@
-# Welcome to your Expo app 👋
+# Authentication App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Prerequisites
 
-## Get started
+Before you get started, make sure you have the following installed:
 
-1. Install dependencies
+- Node.js (v18 or higher)
+- npm or yarn
+- Expo CLI: `npm install -g expo-cli`
+- Firebase project setup with authentication enabled
+
+## Setup Instructions
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/aljary12/auth-app.git
+   cd auth-app
+   ```
+
+2. **Install Dependencies**
+   Make sure you have Node.js installed. Then run:
 
    ```bash
    npm install
    ```
 
-2. Start the app
+3. **Environment Variables**
+   Create a `.env` file in the root directory and add your Firebase configuration details:
 
-   ```bash
-   npx expo start
+   ```plaintext
+   EXPO_PUBLIC_FIREBASE_API_KEY=your_api_key
+   EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+   EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   EXPO_PUBLIC_FIREBASE_MESSSAGING_SENDER_ID=your_messaging_sender_id
+   EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
    ```
 
-In the output, you'll find options to open the app in a
+4. **Run the Application**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   Start the Development Server
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   ```bash
+   npm start
+   ```
 
-## Get a fresh project
+   Or use specific commands:
 
-When you're ready, run:
+   ```bash
+   # Start on iOS simulator
+   npm run ios
 
-```bash
-npm run reset-project
-```
+   # Start on Android emulator
+   npm run android
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+   # Start on Web
+   npm run web
+   ```
 
-## Learn more
+## Features
 
-To learn more about developing your project with Expo, look at the following resources:
+- **User Registration and Login**: Users can create an account and log in using Firebase Authentication.
+- **Form Validation**: The application includes form validation to ensure that all inputs are correct before submission. This includes:
+  - Email format validation
+  - Password strength validation
+  - Required fields check
+- **Firebase Auth Integration**: Leverages Firebase for user authentication with support for email/password sign-in.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Conclusion
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This app serves as a simple authentication solution utilizing Firebase for backend services and validation to ensure quality user input.
