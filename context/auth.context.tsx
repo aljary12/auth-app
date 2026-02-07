@@ -1,11 +1,10 @@
 import {
   createUserWithEmailAndPassword,
-  User as FirebaseUser,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
-
 import React, {
   createContext,
   ReactNode,
@@ -15,11 +14,17 @@ import React, {
 } from "react";
 import { auth } from "../firebase";
 
+interface User {
+  uid: string;
+  email: string | null;
+  name: string | null;
+}
+
 interface AuthContextType {
-  user: FirebaseUser | null;
+  user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<FirebaseUser>;
-  signup: (email: string, password: string) => Promise<FirebaseUser>;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string, name: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -30,12 +35,20 @@ interface Props {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<FirebaseUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser);
+      if (firebaseUser) {
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          name: firebaseUser.displayName,
+        });
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
 
@@ -43,20 +56,35 @@ export const AuthProvider = ({ children }: Props) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    setUser(result.user);
-    return result.user;
+    await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const signup = async (email: string, password: string) => {
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-    setUser(result.user);
-    return result.user;
+  const signup = async (name: string, email: string, password: string) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+
+      // Update profile with name
+      await updateProfile(userCredential.user, {
+        displayName: name,
+      });
+
+      setUser({
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        name: name,
+      });
+    } catch (error) {
+      console.error("Sign up error:", error);
+      throw error;
+    }
   };
 
   const logout = async () => {
     await signOut(auth);
-    setUser(null);
   };
 
   return (

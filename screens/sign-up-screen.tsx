@@ -22,6 +22,7 @@ type Navigation = NativeStackNavigationProp<AuthParamList>;
 
 // Zod validation schema
 const signUpSchema = z.object({
+  name: z.string().min(1, "Full Name is required"),
   email: z
     .email("Please enter a valid email address")
     .min(1, "Email is required"),
@@ -43,9 +44,15 @@ export default function SignUpScreen() {
     mode: "onBlur",
     reValidateMode: "onChange",
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
+  });
+
+  const { field: nameField, fieldState: nameState } = useController({
+    name: "name",
+    control,
   });
 
   const { field: emailField, fieldState: emailState } = useController({
@@ -58,11 +65,11 @@ export default function SignUpScreen() {
     control,
   });
 
-  async function signUpWithEmail({ email, password }: SignUpFormData) {
+  async function signUpWithEmail({ name, email, password }: SignUpFormData) {
     setLoading(true);
 
     try {
-      await signup(email, password);
+      await signup(name, email, password);
     } catch (error: any) {
       const errorMessage =
         firebaseAuthErrors[error?.code] || "Login failed. Please try again.";
@@ -93,7 +100,13 @@ export default function SignUpScreen() {
         <View style={{ gap: 28 }}>
           <View style={{ gap: 20 }}>
             <InputForm
-              title="Email"
+              placeholder="Full Name"
+              value={nameField.value}
+              onChangeText={nameField.onChange}
+              onBlur={nameField.onBlur}
+              error={nameState.error?.message}
+            />
+            <InputForm
               placeholder="Email"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -103,7 +116,6 @@ export default function SignUpScreen() {
               error={emailState.error?.message}
             />
             <InputForm
-              title="Password"
               placeholder="Password"
               autoCapitalize="none"
               isPassword

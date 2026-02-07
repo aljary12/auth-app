@@ -24,6 +24,13 @@ function HomeScreen() {
         bounces={false}
       >
         <InputForm
+          title="Full Name"
+          placeholder="Full Name"
+          autoCapitalize="none"
+          value={user?.name || ""}
+          editable={false}
+        />
+        <InputForm
           title="Email"
           placeholder="Email"
           keyboardType="email-address"
