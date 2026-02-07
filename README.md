@@ -70,3 +70,7 @@ Before you get started, make sure you have the following installed:
 ## Conclusion
 
 This app serves as a simple authentication solution utilizing Firebase for backend services and validation to ensure quality user input.
+
+## Demo
+https://github.com/user-attachments/assets/6609b89a-4305-41bc-b2a0-1a811c8801a4
+
