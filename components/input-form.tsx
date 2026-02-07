@@ -18,11 +18,20 @@ interface Props extends TextInputProps {
   inputStyle?: StyleProp<ViewStyle>;
   leftIcon?: React.ComponentProps<typeof Ionicons>;
   isPassword?: boolean;
+  error?: string;
 }
 
 export default function InputForm(props: Props) {
-  const { leftIcon, title, formStyle, inputStyle, isPassword, style, ...rest } =
-    props;
+  const {
+    leftIcon,
+    title,
+    formStyle,
+    inputStyle,
+    isPassword,
+    error,
+    style,
+    ...rest
+  } = props;
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -42,6 +51,8 @@ export default function InputForm(props: Props) {
             borderRadius: 12,
             flexDirection: "row",
             gap: 12,
+            borderWidth: !!error ? 1 : 0,
+            borderColor: !!error ? palette.alertsStatusError : undefined,
           },
           inputStyle,
         ]}
@@ -79,6 +90,12 @@ export default function InputForm(props: Props) {
           </Touchable>
         )}
       </View>
+
+      {!!error && (
+        <Text style={{ color: palette.alertsStatusError, marginTop: 8 }}>
+          {error}
+        </Text>
+      )}
     </View>
   );
 }

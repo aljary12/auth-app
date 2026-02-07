@@ -9,27 +9,64 @@ import { palette } from "@/themes/pallete";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { firebaseAuthErrors } from "@/firebase";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useController, useForm } from "react-hook-form";
+import { z } from "zod";
+
 type Navigation = NativeStackNavigationProp<AuthParamList>;
+
+// Zod validation schema
+const signInSchema = z.object({
+  email: z
+    .email("Please enter a valid email address")
+    .min(1, "Email is required"),
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(6, "Password must be at least 6 characters"),
+});
+
+type SignInFormData = z.infer<typeof signInSchema>;
 
 export default function SignInScreen() {
   const { login } = useAuth();
   const navigation = useNavigation<Navigation>();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function signInWithEmail() {
+  const { control, handleSubmit } = useForm<SignInFormData>({
+    resolver: zodResolver(signInSchema),
+    mode: "onBlur",
+    reValidateMode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const { field: emailField, fieldState: emailState } = useController({
+    name: "email",
+    control,
+  });
+
+  const { field: passwordField, fieldState: passwordState } = useController({
+    name: "password",
+    control,
+  });
+
+  async function signInWithEmail({ email, password }: SignInFormData) {
     setLoading(true);
 
     try {
       await login(email, password);
-    } catch (e: any) {
-      console.log("🚀 ~ signInWithEmail ~ e:", e?.message);
+    } catch (error: any) {
+      const errorMessage =
+        firebaseAuthErrors[error?.code] || "Login failed. Please try again.";
+      Alert.alert("Error", errorMessage);
     } finally {
       setLoading(false);
     }
@@ -60,14 +97,20 @@ export default function SignInScreen() {
               placeholder="Email"
               keyboardType="email-address"
               autoCapitalize="none"
-              onChangeText={setEmail}
+              value={emailField.value}
+              onChangeText={emailField.onChange}
+              onBlur={emailField.onBlur}
+              error={emailState.error?.message}
             />
             <InputForm
               title="Password"
               placeholder="Password"
               autoCapitalize="none"
               isPassword
-              onChangeText={setPassword}
+              value={passwordField.value}
+              onChangeText={passwordField.onChange}
+              onBlur={passwordField.onBlur}
+              error={passwordState.error?.message}
             />
           </View>
           <View style={{ flexDirection: "row", gap: 24 }}>
@@ -100,9 +143,8 @@ export default function SignInScreen() {
       <View style={{ padding: 24 }}>
         <Button
           title="Sign in"
-          onPress={signInWithEmail}
+          onPress={handleSubmit(signInWithEmail)}
           loading={loading}
-          disabled={!email || !password}
         />
       </View>
     </SafeAreaView>
