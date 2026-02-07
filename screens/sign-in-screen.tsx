@@ -93,7 +93,6 @@ export default function SignInScreen() {
         <View style={{ gap: 28 }}>
           <View style={{ gap: 20 }}>
             <InputForm
-              title="Email"
               placeholder="Email"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -103,7 +102,6 @@ export default function SignInScreen() {
               error={emailState.error?.message}
             />
             <InputForm
-              title="Password"
               placeholder="Password"
               autoCapitalize="none"
               isPassword
